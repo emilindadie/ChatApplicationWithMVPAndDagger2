@@ -1,0 +1,113 @@
+{
+  "project_info": {
+    "project_number": "406446583195",
+    "firebase_url": "https://freechatappli.firebaseio.com",
+    "project_id": "freechatappli",
+    "storage_bucket": "freechatappli.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406446583195:android:de3e2cad3573f79a",
+        "android_client_info": {
+          "package_name": "com.example.emili.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406446583195-092j9kmsov3rlqorsavj26rdehlh958f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emili.chatapp",
+            "certificate_hash": "0ce9cd084b14a3f52dd429eeb332461d3f0b8355"
+          }
+        },
+        {
+          "client_id": "406446583195-7iqbm5nbhevs2d70ndmukijji2i115bk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emili.chatapp",
+            "certificate_hash": "801a27f3723e88367b15a65c1b8983445ad5d5bd"
+          }
+        },
+        {
+          "client_id": "406446583195-oflvg24rjq5fq32c503tm1po0scs3un6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp_x1KuQUJ--hf4FfN3G_C7kbZ8laBtZM"
+        },
+        {
+          "current_key": "AIzaSyAax00b1bEw-Z6zOWgbyWHYaVHsShurlDY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406446583195-oflvg24rjq5fq32c503tm1po0scs3un6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406446583195:android:17e78d1a50203c7c",
+        "android_client_info": {
+          "package_name": "com.example.emili.firstapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406446583195-d1g7m0g3phq51l0k2udm8248quhuspbv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emili.firstapp",
+            "certificate_hash": "0ce9cd084b14a3f52dd429eeb332461d3f0b8355"
+          }
+        },
+        {
+          "client_id": "406446583195-oflvg24rjq5fq32c503tm1po0scs3un6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp_x1KuQUJ--hf4FfN3G_C7kbZ8laBtZM"
+        },
+        {
+          "current_key": "AIzaSyAax00b1bEw-Z6zOWgbyWHYaVHsShurlDY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406446583195-oflvg24rjq5fq32c503tm1po0scs3un6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

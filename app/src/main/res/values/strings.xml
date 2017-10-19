@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FirstApp</string>
+    <string name="firstName">Prenom</string>
+    <string name="lastName">Nom</string>
+    <string name="email">Email</string>
+    <string name="password1">**********</string>
+    <string name="inscriptionButton">Inscription</string>
+    <string name="passwordIndicator">Indicateur</string>
+    <string name="setting">Paramettre</string>
+    <string name="connexionButton">Connexion</string>
+</resources>
