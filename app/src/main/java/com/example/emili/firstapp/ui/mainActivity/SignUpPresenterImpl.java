@@ -41,7 +41,7 @@ public class SignUpPresenterImpl implements SignUpPresenter , ModelCallBack{
 
     @Override
     public void successSignUp() {
-        signUpView.showSuccessSinUp();
+        signUpView.showSuccessSignUp();
     }
 
     @Override

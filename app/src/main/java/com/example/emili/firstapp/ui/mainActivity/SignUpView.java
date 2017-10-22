@@ -6,5 +6,5 @@ package com.example.emili.firstapp.ui.mainActivity;
 
 public interface SignUpView {
     void showErrorSignUp();
-    void showSuccessSinUp();
+    void showSuccessSignUp();
 }

@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
     }
 
     @Override
-    public void showSuccessSinUp() {
+    public void showSuccessSignUp() {
         Toast.makeText(this, "inscription réussite", Toast.LENGTH_LONG).show();
     }
 }
