@@ -3,11 +3,10 @@ package com.example.emili.firstapp.app;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.emili.firstapp.dagger.AppComponent;
-import com.example.emili.firstapp.dagger.AppModule;
-import com.example.emili.firstapp.dagger.DaggerAppComponent;
-import com.example.emili.firstapp.dagger.NetworkModule;
-import com.example.emili.firstapp.dagger.PresenterModule;
+import com.example.emili.firstapp.dagger.ApplicationComponent;
+import com.example.emili.firstapp.dagger.ApplicationModule;
+import com.example.emili.firstapp.dagger.DaggerApplicationComponent;
+import com.example.emili.firstapp.data.FirebaseHelper;
 
 import javax.inject.Inject;
 
@@ -17,25 +16,31 @@ import javax.inject.Inject;
 
 public class ChatApplication extends Application {
 
-    private static ChatApplication app;
-    private AppComponent appComponent;
+    private ApplicationComponent applicationComponent;
+
+
+    @Inject
+    FirebaseHelper firebaseHelper;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        app = this;
 
-        appComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
-                .presenterModule(new PresenterModule()).networkModule(new NetworkModule())
-                .build();    }
+        applicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+        applicationComponent.inject(this);
 
-    public static ChatApplication app(){
-        return app;
     }
 
-    public AppComponent getAppComponent(){
-        return this.appComponent;
+
+    public static ChatApplication get(Context context) {
+        return (ChatApplication) context.getApplicationContext();
+    }
+
+    public ApplicationComponent getApplicationComponent(){
+        return this.applicationComponent;
     }
 
 }

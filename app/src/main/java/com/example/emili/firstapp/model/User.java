@@ -11,7 +11,6 @@ public class User {
     private String ID;
     private boolean firstConnecting = false;
 
-
     public User(){
     }
 
@@ -19,22 +18,18 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.firstConnecting = false;
+        this.firstConnecting = firstConnecting;
     }
-
-
 
     public User(String ID, String firstName, String lastName, String email, boolean firstConnecting){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.ID = ID;
-        this.firstConnecting = false;
+        this.firstConnecting = firstConnecting;
     }
 
-
     public String getID(){
-
         return ID;
     }
     public String getFirstName(){

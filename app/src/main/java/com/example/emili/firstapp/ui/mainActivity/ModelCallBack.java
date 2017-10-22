@@ -5,8 +5,6 @@ package com.example.emili.firstapp.ui.mainActivity;
  */
 
 public interface ModelCallBack {
-
     void successSignUp();
-
     void errorSignUp();
 }
