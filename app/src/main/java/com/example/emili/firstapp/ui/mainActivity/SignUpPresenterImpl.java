@@ -16,7 +16,6 @@ public class SignUpPresenterImpl implements SignUpPresenter , ModelCallBack{
     CreateUserService createUserService;
     static SignUpView signUpView;
     ModelCallBack modelCallBack;
-
     Context context;
 
     @Inject
