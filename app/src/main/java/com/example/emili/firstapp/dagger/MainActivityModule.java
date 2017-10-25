@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.example.emili.firstapp.data.FirebaseHelper;
-import com.example.emili.firstapp.network.CreateUserService;
-import com.example.emili.firstapp.ui.mainActivity.CreateUserImpl;
-import com.example.emili.firstapp.ui.mainActivity.ModelCallBack;
+import com.example.emili.firstapp.network.SignUpUserService;
+import com.example.emili.firstapp.ui.mainActivity.SignUpModelCallBack;
+import com.example.emili.firstapp.ui.mainActivity.SignUpUserImpl;
 import com.example.emili.firstapp.ui.mainActivity.SignUpPresenter;
 import com.example.emili.firstapp.ui.mainActivity.SignUpPresenterImpl;
 
@@ -43,17 +43,17 @@ public class MainActivityModule {
     }
 
     @Provides
-    SignUpPresenter provideSignUpPresenter(@ActivityContext Context context, CreateUserService createUserService, ModelCallBack modelCallBack){
-        return new SignUpPresenterImpl(context, createUserService, modelCallBack);
+    SignUpPresenter provideSignUpPresenter(@ActivityContext Context context, SignUpUserService signUpUserService){
+        return new SignUpPresenterImpl(context, signUpUserService);
     }
 
     @Provides
-    CreateUserService provideCreateUserService(@ActivityContext Context context, FirebaseHelper firebaseHelper){
-        return new CreateUserImpl(context, firebaseHelper);
+    SignUpUserService provideCreateUserService(@ActivityContext Context context, SignUpModelCallBack signUpModelCallBack, FirebaseHelper firebaseHelper){
+        return new SignUpUserImpl(context, signUpModelCallBack, firebaseHelper);
     }
 
     @Provides
-    ModelCallBack provideModelCallBack(@ActivityContext Context context){
-        return new SignUpPresenterImpl(context, null, null);
+    SignUpModelCallBack provideModelCallBack(@ActivityContext Context context){
+        return new SignUpPresenterImpl(context, null);
     }
 }

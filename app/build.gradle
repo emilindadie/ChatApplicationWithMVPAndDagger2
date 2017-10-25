@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'   // dagger2 addition
+//apply plugin: 'com.neenbedankt.android-apt'   // dagger2 addition
 
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.emili.firstapp"
         minSdkVersion 21
@@ -26,9 +26,22 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    // Retrofit
+
+    // Butterknife
+
+    // Lightweight Stream
+
+    // dagger2 addition
+
+
+    compile "com.google.dagger:dagger:2.8"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.8"
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'javax.inject:javax.inject:1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
     compile 'com.google.firebase:firebase-core:11.0.2'
     compile 'com.google.firebase:firebase-auth:11.0.2'
     compile 'com.firebaseui:firebase-ui-auth:2.0.1'
@@ -38,33 +51,19 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:preference-v7:25.3.1'
     compile 'com.android.support:support-vector-drawable:25.3.1'
-    testCompile 'org.mockito:mockito-core:2.0.5-beta'
-
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
-
-    // Retrofit
-    compile "com.squareup.retrofit2:retrofit:2.1.0"
-    compile "com.squareup.retrofit2:converter-gson:2.1.0"
-
-    // Butterknife
-    compile "com.jakewharton:butterknife:8.0.1"
-    apt "com.jakewharton:butterknife-compiler:8.0.1"
-
-    // Lightweight Stream
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.annimon:stream:1.1.2'
-
-
-    // dagger2 addition
-    apt 'com.google.dagger:dagger-compiler:2.2'
-    compile 'com.google.dagger:dagger:2.2'
-    provided 'javax.annotation:jsr250-api:1.0'
-
     /*
-    compile "com.google.dagger:dagger:2.8"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.8"
-    provided 'javax.annotation:jsr250-api:1.0'
-    compile 'javax.inject:javax.inject:1'*/
+    compile 'com.google.dagger:dagger:2.2'
+    compile 'com.android.support:support-v4:25.3.1'*/
+    testCompile 'org.mockito:mockito-core:2.0.5-beta'
     testCompile 'junit:junit:4.12'
+//    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    /*apt 'com.google.dagger:dagger-compiler:2.2'
+    provided 'javax.annotation:jsr250-api:1.0'*/
+    compile 'com.github.bumptech.glide:glide:3.8.0'
 }
 apply plugin: 'com.google.gms.google-services'

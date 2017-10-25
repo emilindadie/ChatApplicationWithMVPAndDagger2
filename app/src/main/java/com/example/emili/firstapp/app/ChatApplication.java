@@ -34,7 +34,6 @@ public class ChatApplication extends Application {
 
     }
 
-
     public static ChatApplication get(Context context) {
         return (ChatApplication) context.getApplicationContext();
     }

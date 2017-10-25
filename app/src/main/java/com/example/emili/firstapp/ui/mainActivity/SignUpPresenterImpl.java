@@ -3,7 +3,7 @@ package com.example.emili.firstapp.ui.mainActivity;
 import android.content.Context;
 
 
-import com.example.emili.firstapp.network.CreateUserService;
+import com.example.emili.firstapp.network.SignUpUserService;
 
 import javax.inject.Inject;
 
@@ -11,31 +11,27 @@ import javax.inject.Inject;
  * Created by emili on 15/10/2017.
  */
 
-public class SignUpPresenterImpl implements SignUpPresenter , ModelCallBack{
+public class SignUpPresenterImpl implements SignUpPresenter , SignUpModelCallBack {
 
-    CreateUserService createUserService;
+    SignUpUserService signUpUserService;
     static SignUpView signUpView;
-    ModelCallBack modelCallBack;
     Context context;
 
     @Inject
-    public SignUpPresenterImpl(Context context, CreateUserService createUserService, ModelCallBack modelCallBack){
+    public SignUpPresenterImpl(Context context, SignUpUserService signUpUserService){
         //voir si probleme
         this.context = context;
-        this.createUserService = createUserService;
-        this.modelCallBack = modelCallBack;
-        //((MainActivityComponent)context).inject(this);
+        this.signUpUserService = signUpUserService;
     }
-
 
     @Override
     public void setView(SignUpView signUpView) {
-        this.signUpView = signUpView;
+        SignUpPresenterImpl.signUpView = signUpView;
     }
 
     @Override
     public void createUser(Context context, String fistName, String lastName, String email, String password) {
-        createUserService.createNewUser(modelCallBack, context, fistName, lastName, email, password);
+        signUpUserService.createNewUser(context, fistName, lastName, email, password);
     }
 
     @Override

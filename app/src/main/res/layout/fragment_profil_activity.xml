@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profilActivity.profilActivityFragment.ProfilActivityFragment">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/profilImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/anonyme"
+            android:layout_marginBottom="20dp"
+            />
+
+        <TextView
+            android:id="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/firstName"
+            android:textSize="25sp"
+            android:layout_marginLeft="260dp"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:id="@+id/lastName"
+            android:layout_below="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lastName"
+            android:textSize="25sp"
+            android:layout_marginLeft="260dp" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_below="@+id/profilImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:textSize="25sp"
+            android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

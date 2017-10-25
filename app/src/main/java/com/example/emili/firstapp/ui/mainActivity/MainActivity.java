@@ -1,7 +1,10 @@
 package com.example.emili.firstapp.ui.mainActivity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,8 @@ import com.example.emili.firstapp.dagger.MainActivityModule;
 import com.example.emili.firstapp.dagger.DaggerMainActivityComponent;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.dagger.MainActivityComponent;
+import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
+
 import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
     @BindView(R.id.password2)
     EditText password2;
 
-    @BindView(R.id.inscriptionButton)
-    Button inscription;
+    @BindView(R.id.signUpButton)
+    Button signUpButton;
 
     private MainActivityComponent mainActivityComponent;
 
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
         ButterKnife.bind(this);
         getMainActivityComponent().inject(this);
         signUpPresenter.setView(this);
-        inscription.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signUser();
@@ -100,6 +105,28 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
     @Override
     public void showSuccessSignUp() {
         Toast.makeText(this, "inscription réussite", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        int id = menuItem.getItemId();
+        switch (id){
+            case R.id.action_signIn:
+                goToSignInActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void goToSignInActivity() {
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
     }
 }
 

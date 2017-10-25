@@ -1,0 +1,68 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profilActivity.firstConnectingFragment.FirstConnectingFragment">
+
+    <LinearLayout
+        android:layout_marginTop="90dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+    <ImageView
+        android:id="@+id/defaultImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/anonyme"
+        android:layout_gravity="center_horizontal"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="250dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+    <TextView
+        android:id="@+id/fileIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fileIndicator"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="280dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <TextView
+            android:id="@+id/identifiant"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/firstConnectingText"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="320dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <Button
+            android:id="@+id/buttonBegin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/firstConnectingButton"/>
+    </LinearLayout>
+
+</FrameLayout>

@@ -109,10 +109,10 @@
         >
 
         <Button
-            android:id="@+id/inscriptionButton"
+            android:id="@+id/signUpButton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/inscriptionButton"/>
+            android:text="@string/signUpButton"/>
 
     </LinearLayout>
 

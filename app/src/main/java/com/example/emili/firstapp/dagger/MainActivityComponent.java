@@ -1,6 +1,6 @@
 package com.example.emili.firstapp.dagger;
 
-import com.example.emili.firstapp.ui.mainActivity.CreateUserImpl;
+import com.example.emili.firstapp.ui.mainActivity.SignUpUserImpl;
 import com.example.emili.firstapp.ui.mainActivity.MainActivity;
 import com.example.emili.firstapp.ui.mainActivity.SignUpPresenterImpl;
 
@@ -15,5 +15,5 @@ import dagger.Component;
 public interface MainActivityComponent {
     void inject(MainActivity mainActivity);
     void inject(SignUpPresenterImpl signUpPresenter);
-    void inject(CreateUserImpl createUser);
+    void inject(SignUpUserImpl signUpUser);
 }

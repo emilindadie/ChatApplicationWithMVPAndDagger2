@@ -8,4 +8,13 @@
     <string name="passwordIndicator">Indicateur</string>
     <string name="setting">Paramettre</string>
     <string name="connexionButton">Connexion</string>
+    <string name="signInButton">Connexion</string>
+    <string name="signUpButton">Inscription</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="firstConnectingText">Bonjour</string>
+    <string name="firstConnectingButton">Commencer</string>
+    <string name="signIn">Connexion</string>
+    <string name="fileIndicator">photo.jpg</string>
 </resources>
