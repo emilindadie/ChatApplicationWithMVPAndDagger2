@@ -17,15 +17,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.emili.firstapp.R;
 import com.example.emili.firstapp.app.ChatApplication;
-
 import com.example.emili.firstapp.dagger.DaggerProfilActivityComponent;
 import com.example.emili.firstapp.dagger.ProfilActivityComponent;
 import com.example.emili.firstapp.dagger.ProfilActivityModule;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.ui.profilActivity.profilActivityFragment.ProfilActivityFragment;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import static android.app.Activity.RESULT_OK;
 
 

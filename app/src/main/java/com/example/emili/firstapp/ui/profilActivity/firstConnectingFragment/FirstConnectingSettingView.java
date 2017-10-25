@@ -9,5 +9,4 @@ public interface FirstConnectingSettingView {
     void showUserLastName(String lastName);
     void showUrlProfilPicture(String url);
     void showSuccessUpdateProfilPicture();
-
 }
