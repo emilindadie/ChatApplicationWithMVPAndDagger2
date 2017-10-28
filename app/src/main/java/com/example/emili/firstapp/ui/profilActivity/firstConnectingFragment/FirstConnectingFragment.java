@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,24 +45,21 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
     private OnFragmentInteractionListener mListener;
     String urlDefaulPicture;
 
-    @BindView(R.id.identifiant)
+    //@BindView(R.id.identifiant)
     TextView identifiant;
 
-    @BindView(R.id.fileIndicator)
+    //@BindView(R.id.fileIndicator)
     TextView fileIndicator;
 
-    @BindView(R.id.defaultImageView)
+    //@BindView(R.id.defaultImageView)
     ImageView defaultimageProfil;
 
 
-    @BindView(R.id.buttonBegin)
+    //@BindView(R.id.buttonBegin)
     Button begin;
-
     String firstName="";
     String lastName="";
-
     boolean cliquer = false;
-
     private static final int RC_PHOTO_PICKER = 2;
 
 
@@ -101,8 +99,6 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
         getProfilActivityComponent().inject(this);
     }
 
@@ -118,7 +114,15 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(getActivity(), view);
+        identifiant = (TextView) view.findViewById(R.id.identifiant);
+        fileIndicator = (TextView) view.findViewById(R.id.fileIndicator);
+        defaultimageProfil = (ImageView) view.findViewById(R.id.defaultImageView);
+        begin = (Button) view.findViewById(R.id.buttonBegin);
+
+        begin.setOnClickListener(this);
+
+        //ButterKnife.bind(getActivity(), view);
+        firstConnectingSettingPresenter.setFirstConnectingSettingView(this);
         firstConnectingSettingPresenter.loadUserDefaultProfilPicture();
         makeDefaultPicture(defaultimageProfil, urlDefaulPicture);
         identifiant.setText("Bonjour "+firstName +" "+lastName);
@@ -167,7 +171,6 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
             e.printStackTrace();
         }
         goToProfilActivity();
-
     }
 
     private void goToProfilActivity() {

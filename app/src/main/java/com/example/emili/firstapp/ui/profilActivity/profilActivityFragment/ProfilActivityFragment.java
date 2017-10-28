@@ -1,11 +1,19 @@
 package com.example.emili.firstapp.ui.profilActivity.profilActivityFragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -19,6 +27,9 @@ import com.example.emili.firstapp.dagger.DaggerProfilActivityComponent;
 import com.example.emili.firstapp.dagger.ProfilActivityComponent;
 import com.example.emili.firstapp.dagger.ProfilActivityModule;
 import com.example.emili.firstapp.data.FirebaseHelper;
+import com.example.emili.firstapp.ui.chatActivity.ChatActivity;
+import com.example.emili.firstapp.ui.preferencesActivity.PreferencesActivity;
+import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
 
 import javax.inject.Inject;
 
@@ -26,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ProfilActivityFragment extends Fragment implements UserProfilView{
+public class ProfilActivityFragment extends Fragment implements UserProfilView, SharedPreferences.OnSharedPreferenceChangeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,16 +59,16 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView{
 
     String urlPictureImage;
 
-    @BindView(R.id.firstName)
+    //@BindView(R.id.firstName)
     TextView textViewFirstName;
 
-    @BindView(R.id.lastName)
+    //@BindView(R.id.lastName)
     TextView textViewLastName;
 
-    @BindView(R.id.email)
+   // @BindView(R.id.email)
     TextView textViewEmail;
 
-    @BindView(R.id.profilImageView)
+    //@BindView(R.id.profilImageView)
     ImageView profilImage;
 
     private ProfilActivityComponent profilActivityComponent;
@@ -91,6 +102,8 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView{
         }
 
         getProfilActivityComponent().inject(this);
+        ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
+
     }
 
     @Override
@@ -104,7 +117,14 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(getActivity(), view);
+
+        textViewFirstName = (TextView) view.findViewById(R.id.firstName);
+        textViewLastName = (TextView) view.findViewById(R.id.lastName);
+        textViewEmail = (TextView) view.findViewById(R.id.email);
+        profilImage = (ImageView) view.findViewById(R.id.profilImageView);
+
+        //ButterKnife.bind(getActivity(), view);
+        userProfilPresenter.setUserProfilView(this);
         userProfilPresenter.loadUserData();
         makeDefaultPicture(profilImage, urlPictureImage);
     }
@@ -155,8 +175,46 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView{
                 .into(imageView);
     }
 
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
+        menuInflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        int id = menuItem.getItemId();
+        switch (id){
+            case R.id.action_setting:
+                goToSettingActivity();
+                break;
+                
+            case R.id.action_Chat:
+                goToChatActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private void goToChatActivity() {
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToSettingActivity() {
+        Intent intent = new Intent(getActivity(), PreferencesActivity.class);
+        startActivity(intent);
+    }
+
 }

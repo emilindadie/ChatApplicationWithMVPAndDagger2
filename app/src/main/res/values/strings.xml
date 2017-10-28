@@ -17,4 +17,15 @@
     <string name="firstConnectingButton">Commencer</string>
     <string name="signIn">Connexion</string>
     <string name="fileIndicator">photo.jpg</string>
+    <string name="signOut">Deconnexion</string>
+    <string name="goToChat">Chat</string>
+    <string name="bg_color">Background</string>
+    <string name="bg_key">backgroud</string>
+    <string name="default_bg_color">Blue</string>
+    <string name="mode_private">Mode privée</string>
+    <string name="private_key">mode_privee</string>
+    <string name="pref_private_mode_key">mode_privee</string>
+    <string name="chatMessage">Taper votre message</string>
+    <string name="envoyerMessage">Envoyer</string>
+    <string name="distance">à 5 km</string>
 </resources>

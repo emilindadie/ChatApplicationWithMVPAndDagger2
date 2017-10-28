@@ -3,6 +3,8 @@
     package="com.example.emili.firstapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".app.ChatApplication"
@@ -12,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.mainActivity.MainActivity"
+        <activity
+            android:name=".ui.mainActivity.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,13 +23,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.signInActivity.SignInActivity"
+        <activity
+            android:name=".ui.signInActivity.SignInActivity"
             android:parentActivityName=".ui.mainActivity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.mainActivity.MainActivity" />
+        </activity>
+        <activity android:name=".ui.profilActivity.ProfilActivity" />
+        <activity android:name=".ui.preferencesActivity.PreferencesActivity" />
+        <activity android:name=".ui.chatActivity.ChatActivity"
+            android:parentActivityName=".ui.profilActivity.ProfilActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.mainActivity.MainActivity" />
+            android:value=".ui.profilActivity.ProfilActivity" />
         </activity>
-        <activity android:name=".ui.profilActivity.ProfilActivity"/>
     </application>
 
 </manifest>

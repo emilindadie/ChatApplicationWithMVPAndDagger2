@@ -36,25 +36,26 @@ dependencies {
     // dagger2 addition
 
 
-    compile "com.google.dagger:dagger:2.8"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.8"
+    compile "com.google.dagger:dagger:2.12"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.12"
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'javax.inject:javax.inject:1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.firebase:firebase-core:11.0.2'
-    compile 'com.google.firebase:firebase-auth:11.0.2'
-    compile 'com.firebaseui:firebase-ui-auth:2.0.1'
-    compile 'com.google.android.gms:play-services-auth:11.0.2'
-    compile 'com.google.firebase:firebase-database:11.0.2'
-    compile 'com.google.firebase:firebase-storage:11.0.2'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:preference-v7:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'com.google.firebase:firebase-core:11.4.2'
+    compile 'com.google.firebase:firebase-auth:11.4.2'
+    compile 'com.firebaseui:firebase-ui-auth:2.1.0'
+    compile 'com.google.android.gms:play-services-auth:11.4.2'
+    compile 'com.google.firebase:firebase-database:11.4.2'
+    compile 'com.google.firebase:firebase-storage:11.4.2'
+    compile 'com.android.support:design:25.4.0'
+    compile 'com.android.support:preference-v7:25.4.0'
+    compile 'com.android.support:support-vector-drawable:25.4.0'
+    compile 'com.android.support:recyclerview-v7:25.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife:8.7.0'
     compile 'com.annimon:stream:1.1.2'
     /*
     compile 'com.google.dagger:dagger:2.2'

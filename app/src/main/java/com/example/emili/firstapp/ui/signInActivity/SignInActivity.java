@@ -26,13 +26,13 @@ import butterknife.ButterKnife;
 
 public class SignInActivity extends AppCompatActivity implements SignInView{
 
-    @BindView(R.id.email)
+    //@BindView(R.id.email)
     EditText email;
 
-    @BindView(R.id.password)
+    //@BindView(R.id.password)
     EditText password;
 
-    @BindView(R.id.signInButton)
+    //@BindView(R.id.signInButton)
     Button signInButton;
 
     @Inject
@@ -55,12 +55,17 @@ public class SignInActivity extends AppCompatActivity implements SignInView{
         setContentView(R.layout.activity_sign_in);
 
         //Bind view
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
         ActionBar actionBar = this.getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+        signInButton = (Button) findViewById(R.id.signInButton);
 
         getSignInActivityComponent().inject(this);
         signInPresenter.setView(this);

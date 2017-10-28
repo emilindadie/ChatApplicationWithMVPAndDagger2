@@ -20,25 +20,26 @@ import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
 import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements SignUpView{
 
-    @BindView(R.id.firstName)
+    //@BindView(R.id.firstName)
     EditText firstName;
 
-    @BindView(R.id.lastName)
+    //@BindView(R.id.lastName)
     EditText lastName;
 
-    @BindView(R.id.email)
+    //@BindView(R.id.email)
     EditText email;
 
-    @BindView(R.id.password1)
+   //@BindView(R.id.password1)
     EditText password1;
 
-    @BindView(R.id.password2)
+    //@BindView(R.id.password2)
     EditText password2;
 
-    @BindView(R.id.signUpButton)
+   // @BindView(R.id.signUpButton)
     Button signUpButton;
 
     private MainActivityComponent mainActivityComponent;
@@ -65,10 +66,18 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firstName = (EditText) findViewById(R.id.firstName);
+        lastName = (EditText) findViewById(R.id.lastName);
+        email = (EditText) findViewById(R.id.email);
+        password1 = (EditText) findViewById(R.id.password1);
+        password2 = (EditText) findViewById(R.id.password2);
+        signUpButton = (Button) findViewById(R.id.signUpButton);
+
         //Bind view
-        ButterKnife.bind(this);
+       // ButterKnife.bind(this);
         getMainActivityComponent().inject(this);
         signUpPresenter.setView(this);
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

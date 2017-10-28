@@ -1,5 +1,7 @@
 package com.example.emili.firstapp.data;
 
+import android.support.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +24,7 @@ public class FirebaseHelper {
     private FirebaseUser firebaseUser;
     private FirebaseStorage firebaseStorage;
     private StorageReference profilPictures;
+    private StorageReference messagePictures;
 
     public FirebaseHelper(){
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -30,6 +33,7 @@ public class FirebaseHelper {
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseStorage = FirebaseStorage.getInstance();
         profilPictures = firebaseStorage.getReference().child("profil_pictures");
+        messagePictures = firebaseStorage.getReference().child("message_pictures");
     }
 
     public FirebaseAuth getFirebaseAuth(){
@@ -50,4 +54,13 @@ public class FirebaseHelper {
     public StorageReference getProfilPicturesReference(){
         return profilPictures;
     }
+
+    public StorageReference getMessagePicturesReference(){
+        return messagePictures;
+    }
+
+    public DatabaseReference getChatMessageDataReference(){
+        return databaseReference.child("chat");
+    }
+
 }
