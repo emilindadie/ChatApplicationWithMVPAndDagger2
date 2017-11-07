@@ -28,4 +28,8 @@
     <string name="chatMessage">Taper votre message</string>
     <string name="envoyerMessage">Envoyer</string>
     <string name="distance">à 5 km</string>
+    <string name="main_notification_channel_name">remind_notification_channel</string>
+    <string name="charging_reminder_notification_channel_title">Device Charging - Where\\\'s that water?</string>
+    <string name="charging_reminder_notification_body">There\\\'s never a better time to drink water than when you know your phone is charging. Drink up!</string>
+    <string name="runNotification">Notification</string>
 </resources>

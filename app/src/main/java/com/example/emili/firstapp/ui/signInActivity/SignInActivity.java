@@ -21,8 +21,6 @@ import com.example.emili.firstapp.ui.profilActivity.ProfilActivity;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SignInActivity extends AppCompatActivity implements SignInView{
 
@@ -61,7 +59,6 @@ public class SignInActivity extends AppCompatActivity implements SignInView{
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);

@@ -12,4 +12,5 @@ import com.example.emili.firstapp.ui.profilActivity.profilActivityFragment.UserP
 public interface GetUserDefaultPictureService {
     void loadUserDefaultPicture();
     void sendUserNewProfilPicture(Uri uri);
+    void updateBoleanFirstConnecting();
 }

@@ -33,9 +33,6 @@ import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class ProfilActivityFragment extends Fragment implements UserProfilView, SharedPreferences.OnSharedPreferenceChangeListener{
     // TODO: Rename parameter arguments, choose names that match
@@ -184,37 +181,6 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView, 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater){
-        menuInflater.inflate(R.menu.main_menu, menu);
-        super.onCreateOptionsMenu(menu, menuInflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        int id = menuItem.getItemId();
-        switch (id){
-            case R.id.action_setting:
-                goToSettingActivity();
-                break;
-                
-            case R.id.action_Chat:
-                goToChatActivity();
-                break;
-        }
-        return super.onOptionsItemSelected(menuItem);
-    }
-
-    private void goToChatActivity() {
-        Intent intent = new Intent(getActivity(), ChatActivity.class);
-        startActivity(intent);
-    }
-
-    private void goToSettingActivity() {
-        Intent intent = new Intent(getActivity(), PreferencesActivity.class);
-        startActivity(intent);
     }
 
 }

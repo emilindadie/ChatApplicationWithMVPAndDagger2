@@ -1,6 +1,7 @@
 package com.example.emili.firstapp.ui.signInActivity;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -16,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 

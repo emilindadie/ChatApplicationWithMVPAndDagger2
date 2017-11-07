@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,11 +25,8 @@ import com.example.emili.firstapp.ui.profilActivity.profilActivityFragment.Profi
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
-
 
 public class FirstConnectingFragment extends Fragment implements FirstConnectingSettingView, View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
@@ -62,13 +58,12 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
     boolean cliquer = false;
     private static final int RC_PHOTO_PICKER = 2;
 
+    @Inject FirebaseHelper firebaseHelper;
+    @Inject FirstConnectingSettingPresenter firstConnectingSettingPresenter;
 
     public FirstConnectingFragment() {
         // Required empty public constructor
     }
-
-    @Inject FirebaseHelper firebaseHelper;
-    @Inject FirstConnectingSettingPresenter firstConnectingSettingPresenter;
 
     private ProfilActivityComponent profilActivityComponent;
 
@@ -118,6 +113,7 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
         fileIndicator = (TextView) view.findViewById(R.id.fileIndicator);
         defaultimageProfil = (ImageView) view.findViewById(R.id.defaultImageView);
         begin = (Button) view.findViewById(R.id.buttonBegin);
+        fileIndicator.setText("");
 
         begin.setOnClickListener(this);
 
@@ -174,6 +170,7 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
     }
 
     private void goToProfilActivity() {
+        firstConnectingSettingPresenter.updateBooleanFirstConnecting();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutProfilActivity, new ProfilActivityFragment()).commit();
     }
 
@@ -186,7 +183,11 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
                 break;
 
             case R.id.buttonBegin:
-                cliquer = true;
+                if(fileIndicator.getText().length() > 0){
+                    cliquer = true;
+                }else {
+                goToProfilActivity();
+                }
                 break;
         }
     }

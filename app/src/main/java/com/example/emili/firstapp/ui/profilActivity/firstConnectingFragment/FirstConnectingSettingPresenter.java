@@ -12,4 +12,5 @@ public interface FirstConnectingSettingPresenter {
     void loadUserDefaultProfilPicture();
     void setFirstConnectingSettingView(FirstConnectingSettingView firstConnectingSettingView);
     void updateProfilPicture(Uri uri);
+    void updateBooleanFirstConnecting();
 }

@@ -9,7 +9,6 @@ import com.example.emili.firstapp.R;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.model.User;
 import com.example.emili.firstapp.network.SignUpUserService;
-import com.example.emili.firstapp.ui.signInActivity.SignInModelCallBack;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,7 +17,16 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Inject;
+
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by emili on 15/10/2017.
@@ -28,6 +36,7 @@ public class SignUpUserImpl implements SignUpUserService {
 
     private static final String TAG = "MainActivity";
 
+
     private FirebaseHelper firebaseHelper;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
@@ -36,7 +45,6 @@ public class SignUpUserImpl implements SignUpUserService {
     private StorageReference profilPicutre;
     private int defaultProfilPicture;
     SignUpModelCallBack signUpModelCallBack;
-    //Handler handler;
 
     @Inject
     public SignUpUserImpl(Context context, SignUpModelCallBack signUpModelCallBack, FirebaseHelper firebaseHelper){
@@ -51,41 +59,76 @@ public class SignUpUserImpl implements SignUpUserService {
     }
 
     @Override
-    public void createNewUser(final Context context, final String firstName, final String lastName, final String email, String password) {
+    public void createNewUser(final Context context, final String firstName, final String lastName, final String email, final String password) {
+        createUser(firstName, lastName, password, email).subscribeOn(Schedulers.io())
+            // Be notified on the main thread
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(getFirebaseUserObserver());
+    }
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+    private io.reactivex.Observable<FirebaseUser> createUser(final String firstName, final String lastName, final String email, final String password){
+
+        io.reactivex.Observable<FirebaseUser> createUser = io.reactivex.Observable.create(new ObservableOnSubscribe<FirebaseUser>() {
+            @Override
+            public void subscribe(final ObservableEmitter<FirebaseUser> e) throws Exception {
+
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             onAuthSuccess(task.getResult().getUser(), firstName, lastName, email);
-                            signUpModelCallBack.successSignUp();
+
+                            e.onNext(task.getResult().getUser());
+                            e.onComplete();
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            signUpModelCallBack.errorSignUp();
+                            e.onError(new Throwable("Impossible de s'inscrire"));
                         }
-                    }
-                });
+                        }
+                    });
+
+            }
+        });
+
+        return createUser;
+    }
+    private Observer<FirebaseUser> getFirebaseUserObserver() {
+        return new Observer<FirebaseUser>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
+
+            @Override
+            public void onNext(FirebaseUser value) {
+                if(value != null){
+                    signUpModelCallBack.successSignUp();
+                }
+                else{
+
+                    signUpModelCallBack.errorSignUp();
+                }
+                //System.out.println(value);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                signUpModelCallBack.errorSignUp();
+            }
+
+            @Override
+            public void onComplete() {
+                //System.out.println("onComplete");
+            }
+        };
     }
 
     private void onAuthSuccess(final FirebaseUser user, final String firstName, final String lastName, final String email) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                writeNewUser(user.getUid(), firstName, lastName, email, true);
-                /*
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });*/
-            }
-        });
-        thread.start();
+        writeNewUser(user.getUid(), firstName, lastName, email, true);
     }
 
     private void writeNewUser(final String userId, final String nom, final String prenom, final String email, final boolean firstConnecting) {

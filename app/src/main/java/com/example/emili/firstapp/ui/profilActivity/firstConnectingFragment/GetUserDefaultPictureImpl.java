@@ -3,8 +3,8 @@ package com.example.emili.firstapp.ui.profilActivity.firstConnectingFragment;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.widget.Toast;
-
+import android.os.Handler;
+import android.util.Log;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.model.User;
 import com.example.emili.firstapp.network.GetUserDefaultPictureService;
@@ -32,6 +32,7 @@ public class GetUserDefaultPictureImpl implements GetUserDefaultPictureService{
    FirebaseHelper firebaseHelper;
    private DatabaseReference userData;
    private FirebaseUser firebaseUser;
+   Handler handler;
    FirstConnectingSettingModelcallBack firstConnectingSettingModelcallBack;
 
    @Inject
@@ -41,26 +42,32 @@ public class GetUserDefaultPictureImpl implements GetUserDefaultPictureService{
       this.firebaseUser = firebaseHelper.getFirebaseUser();
       this.firstConnectingSettingModelcallBack = firstConnectingSettingModelcallBack;
       this.userData = firebaseHelper.getUserDataReference(firebaseUser);
+      handler = new Handler();
    }
 
    @Override
    public void loadUserDefaultPicture() {
-
       Thread thread = new Thread(new Runnable() {
          @Override
          public void run() {
             userData.addValueEventListener(new ValueEventListener() {
                @Override
                public void onDataChange(DataSnapshot dataSnapshot) {
-                  User user = dataSnapshot.getValue(User.class);
-                  assert user != null;
-                  firstConnectingSettingModelcallBack.getUserFirstname(user.getFirstName());
-                  firstConnectingSettingModelcallBack.getUserLastName(user.getLastName());
-                  firstConnectingSettingModelcallBack.getUserDefaultPicture(user.getProfilPicture());
+                  final User user = dataSnapshot.getValue(User.class);
+                  Log.v("userFirstName", user.getFirstName());
+                  Log.v("userLastName", user.getLastName());
+
+                  handler.post(new Runnable() {
+                     @Override
+                     public void run() {
+                        firstConnectingSettingModelcallBack.getUserFirstname(user.getFirstName());
+                        firstConnectingSettingModelcallBack.getUserLastName(user.getLastName());
+                        firstConnectingSettingModelcallBack.getUserDefaultPicture(user.getProfilPicture());
+                     }
+                  });
                }
                @Override
                public void onCancelled(DatabaseError databaseError) {
-
                }
             });
          }
@@ -85,5 +92,14 @@ public class GetUserDefaultPictureImpl implements GetUserDefaultPictureService{
             firstConnectingSettingModelcallBack.onSuccessUpdateProfilPicture();
          }
       });
+   }
+
+   @Override
+   public void updateBoleanFirstConnecting() {
+      FirebaseUser firebaseUser = firebaseHelper.getFirebaseUser();
+      DatabaseReference userDataReference = firebaseHelper.getUserDataReference(firebaseUser);
+      Map<String, Object> changeBooleanFirstConnecting = new HashMap<String, Object>();
+      changeBooleanFirstConnecting.put("firstConnecting", false);
+      userDataReference.updateChildren(changeBooleanFirstConnecting);
    }
 }

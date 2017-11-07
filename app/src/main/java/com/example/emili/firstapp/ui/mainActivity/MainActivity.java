@@ -15,14 +15,13 @@ import com.example.emili.firstapp.dagger.MainActivityModule;
 import com.example.emili.firstapp.dagger.DaggerMainActivityComponent;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.dagger.MainActivityComponent;
+import com.example.emili.firstapp.notification.NotificationUtils;
 import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
 
 import javax.inject.Inject;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements SignUpView{
+
+public class MainActivity extends AppCompatActivity implements SignUpView, View.OnClickListener{
 
     //@BindView(R.id.firstName)
     EditText firstName;
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
     EditText password2;
 
    // @BindView(R.id.signUpButton)
-    Button signUpButton;
+    Button signUpButton, runNotification;
 
     private MainActivityComponent mainActivityComponent;
 
@@ -74,16 +73,11 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
         signUpButton = (Button) findViewById(R.id.signUpButton);
 
         //Bind view
-       // ButterKnife.bind(this);
+       //ButterKnife.bind(this);
         getMainActivityComponent().inject(this);
         signUpPresenter.setView(this);
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signUser();
-            }
-        });
+        signUpButton.setOnClickListener(this);
     }
 
     private void signUser(){
@@ -136,6 +130,16 @@ public class MainActivity extends AppCompatActivity implements SignUpView{
     private void goToSignInActivity() {
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.signInButton:
+                signUser();
+                break;
+        }
     }
 }
 

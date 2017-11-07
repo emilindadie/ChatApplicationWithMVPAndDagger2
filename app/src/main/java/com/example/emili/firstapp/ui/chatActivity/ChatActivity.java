@@ -1,5 +1,6 @@
 package com.example.emili.firstapp.ui.chatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -33,6 +34,7 @@ import com.example.emili.firstapp.dagger.DaggerChatActivityComponent;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.data.GPSHelper;
 import com.example.emili.firstapp.model.ChatMessage;
+import com.example.emili.firstapp.notification.NotificationUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;

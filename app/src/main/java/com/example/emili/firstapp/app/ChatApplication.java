@@ -31,7 +31,6 @@ public class ChatApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         applicationComponent.inject(this);
-
     }
 
     public static ChatApplication get(Context context) {

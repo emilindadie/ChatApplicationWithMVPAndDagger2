@@ -11,6 +11,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.logging.Handler;
+
 /**
  * Created by emili on 23/10/2017.
  */
@@ -22,6 +24,7 @@ public class GetUserProfilInformationImpl implements GetUserProfilInformationSer
     private FirebaseUser firebaseUser;
     private Context context;
     private UserProfilModelCallBack userProfilModelCallBack;
+    android.os.Handler handler;
 
     public GetUserProfilInformationImpl(Context context, UserProfilModelCallBack userProfilModelCallBack, FirebaseHelper firebaseHelper){
         this.context = context;
@@ -29,6 +32,7 @@ public class GetUserProfilInformationImpl implements GetUserProfilInformationSer
         this.firebaseUser = firebaseHelper.getFirebaseUser();
         this.userProfilModelCallBack = userProfilModelCallBack;
         this.userData = firebaseHelper.getUserDataReference(firebaseUser);
+        handler = new android.os.Handler();
     }
 
     @Override
@@ -40,13 +44,18 @@ public class GetUserProfilInformationImpl implements GetUserProfilInformationSer
                 userData.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
+                        final User user = dataSnapshot.getValue(User.class);
                         assert user != null;
 
-                        userProfilModelCallBack.onSuccessFirstName(user.getFirstName());
-                        userProfilModelCallBack.onSuccessLastName(user.getLastName());
-                        userProfilModelCallBack.onSuccessEmail(user.getEmail());
-                        userProfilModelCallBack.onSuccessUrlProfilPicture(user.getProfilPicture());
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                userProfilModelCallBack.onSuccessFirstName(user.getFirstName());
+                                userProfilModelCallBack.onSuccessLastName(user.getLastName());
+                                userProfilModelCallBack.onSuccessEmail(user.getEmail());
+                                userProfilModelCallBack.onSuccessUrlProfilPicture(user.getProfilPicture());
+                            }
+                        });
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {

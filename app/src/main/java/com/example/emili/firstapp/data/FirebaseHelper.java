@@ -62,5 +62,4 @@ public class FirebaseHelper {
     public DatabaseReference getChatMessageDataReference(){
         return databaseReference.child("chat");
     }
-
 }

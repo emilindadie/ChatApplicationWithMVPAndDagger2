@@ -41,6 +41,11 @@ public class FirstConnectingSettingPresenterImpl implements FirstConnectingSetti
     }
 
     @Override
+    public void updateBooleanFirstConnecting() {
+        getUserDefaultPictureService.updateBoleanFirstConnecting();
+    }
+
+    @Override
     public void getUserDefaultPicture(String url) {
     firstConnectingSettingView.showUrlProfilPicture(url);
     }

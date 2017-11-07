@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.model.ChatMessage;
 import com.example.emili.firstapp.network.ModelMessageService;
+import com.example.emili.firstapp.notification.NotificationUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -82,6 +83,7 @@ public class ModelMessageImpl implements ModelMessageService {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
+                    startNotification(context, chatMessage.getAuteur(), chatMessage.getText());
                     chatMessagesList.add(chatMessage);
                     chatMessageModelCallBack.onSuccessLoading();
                 }
@@ -102,6 +104,10 @@ public class ModelMessageImpl implements ModelMessageService {
             chatMessageModelCallBack.getMessage(chatMessagesList);
             chatMessageReference.addChildEventListener(childEventListener);
         }
+    }
+
+    private void startNotification(Context context, String title, String text) {
+        NotificationUtils.remindUserBecauseCharging(context, title, text);
     }
 
 }
