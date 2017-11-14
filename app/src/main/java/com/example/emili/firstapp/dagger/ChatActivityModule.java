@@ -45,8 +45,8 @@ public class ChatActivityModule {
 
 
     @Provides
-    GPSHelper gpsHelper(){
-        return new GPSHelper();
+    GPSHelper gpsHelper(@ActivityContext Context context){
+        return new GPSHelper(context);
     }
 
     @Provides

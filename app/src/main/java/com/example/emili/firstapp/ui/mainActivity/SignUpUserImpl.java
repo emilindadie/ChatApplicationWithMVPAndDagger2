@@ -2,6 +2,7 @@ package com.example.emili.firstapp.ui.mainActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -21,6 +22,7 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -45,6 +47,7 @@ public class SignUpUserImpl implements SignUpUserService {
     private StorageReference profilPicutre;
     private int defaultProfilPicture;
     SignUpModelCallBack signUpModelCallBack;
+    Handler handler;
 
     @Inject
     public SignUpUserImpl(Context context, SignUpModelCallBack signUpModelCallBack, FirebaseHelper firebaseHelper){
@@ -52,65 +55,72 @@ public class SignUpUserImpl implements SignUpUserService {
         this.signUpModelCallBack = signUpModelCallBack;
         this.firebaseHelper = firebaseHelper;
         firebaseAuth = firebaseHelper.getFirebaseAuth();
-        firebaseUser = firebaseHelper.getFirebaseUser();
-        userDatabaseReference = firebaseHelper.getUserDataReference(firebaseUser);
         this.profilPicutre = firebaseHelper.getProfilPicturesReference();
         defaultProfilPicture = R.drawable.anonyme;
+        handler = new Handler();
     }
 
     @Override
     public void createNewUser(final Context context, final String firstName, final String lastName, final String email, final String password) {
-        createUser(firstName, lastName, password, email).subscribeOn(Schedulers.io())
+        /*
+        setupCreateUser(firstName, lastName, password, email).subscribeOn(Schedulers.io())
             // Be notified on the main thread
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(getFirebaseUserObserver());
-    }
+            .subscribe(getFirebaseUserObserver());*/
 
-    private io.reactivex.Observable<FirebaseUser> createUser(final String firstName, final String lastName, final String email, final String password){
 
-        io.reactivex.Observable<FirebaseUser> createUser = io.reactivex.Observable.create(new ObservableOnSubscribe<FirebaseUser>() {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
             @Override
-            public void subscribe(final ObservableEmitter<FirebaseUser> e) throws Exception {
-
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            onAuthSuccess(task.getResult().getUser(), firstName, lastName, email);
-
-                            e.onNext(task.getResult().getUser());
-                            e.onComplete();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            e.onError(new Throwable("Impossible de s'inscrire"));
-                        }
-                        }
-                    });
-
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    onAuthSuccess(task.getResult().getUser(), firstName, lastName, email);
+                }
+                else {
+                    signUpModelCallBack.errorSignUp();
+                }
             }
         });
-
-        return createUser;
     }
-    private Observer<FirebaseUser> getFirebaseUserObserver() {
-        return new Observer<FirebaseUser>() {
+
+
+
+    /*
+    private Observable<AuthResult> setupCreateUser(final String firstName, final String lastName, final String email, final String password){
+
+
+        return Observable.create(new ObservableOnSubscribe<AuthResult>() {
+            @Override
+            public void subscribe(final ObservableEmitter<AuthResult> e) throws Exception {
+
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            onAuthSuccess(firebaseAuth.getCurrentUser(), firstName, lastName, password);
+                            e.onNext(task.getResult());
+                            e.onComplete();
+                        }
+                        else{
+                            e.onError(new Throwable("error"));
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private Observer<AuthResult> getFirebaseUserObserver() {
+        return new Observer<AuthResult>() {
 
             @Override
             public void onSubscribe(Disposable d) {
             }
 
             @Override
-            public void onNext(FirebaseUser value) {
-                if(value != null){
-                    signUpModelCallBack.successSignUp();
-                }
-                else{
+            public void onNext(AuthResult value) {
 
-                    signUpModelCallBack.errorSignUp();
+                if(value.getUser() != null){
+                    signUpModelCallBack.successSignUp();
                 }
                 //System.out.println(value);
             }
@@ -126,12 +136,25 @@ public class SignUpUserImpl implements SignUpUserService {
             }
         };
     }
-
+    */
     private void onAuthSuccess(final FirebaseUser user, final String firstName, final String lastName, final String email) {
-        writeNewUser(user.getUid(), firstName, lastName, email, true);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                writeNewUser(user, user.getUid(), firstName, lastName, email, true);
+               handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        signUpModelCallBack.successSignUp();
+                    }
+                });
+            }
+        });
+        thread.start();
     }
 
-    private void writeNewUser(final String userId, final String nom, final String prenom, final String email, final boolean firstConnecting) {
+    private void writeNewUser(FirebaseUser firebaseUser, final String userId, final String nom, final String prenom, final String email, final boolean firstConnecting) {
+        userDatabaseReference = firebaseHelper.getUserDataReference(firebaseUser);
         User user = new User(userId, nom, prenom, email, firstConnecting, "https://firebasestorage.googleapis.com/v0/b/freechatappli.appspot.com/o/anonyme.png?alt=media&token=80e29409-5e91-4dda-979f-07c2ccedccd8");
         userDatabaseReference.setValue(user);
     }

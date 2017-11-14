@@ -22,11 +22,13 @@ import static android.content.Context.LOCATION_SERVICE;
 @Singleton
 public class GPSHelper implements LocationListener{
 
-    public GPSHelper(){
+    private Context context;
+    public GPSHelper(Context context){
         super();
+        this.context = context;
     }
 
-    public Location getMyPosition(Context context){
+    public Location getMyPosition(){
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission( context, Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
             Log.e("fist","error");
@@ -34,6 +36,7 @@ public class GPSHelper implements LocationListener{
         }
         try {
             LocationManager lm = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+            assert lm != null;
             boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             if (isGPSEnabled){
                 Criteria criteria = new Criteria();

@@ -1,6 +1,7 @@
 package com.example.emili.firstapp.ui.profilActivity.profilActivityFragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 
 import com.example.emili.firstapp.network.GetUserProfilInformationService;
@@ -11,7 +12,7 @@ import javax.inject.Inject;
  * Created by emili on 23/10/2017.
  */
 
-public class UserProfilPresenterImpl implements UserProfilPresenter, UserProfilModelCallBack {
+    public class UserProfilPresenterImpl implements UserProfilPresenter, UserProfilModelCallBack {
 
 
     private static UserProfilView userProfilView;
@@ -35,6 +36,11 @@ public class UserProfilPresenterImpl implements UserProfilPresenter, UserProfilM
     }
 
     @Override
+    public void updateProfilPicture(Uri uri) {
+    getUserProfilInformationService.updateProfilPicture(uri);
+    }
+
+    @Override
     public void onSuccessFirstName(String firstName) {
     userProfilView.showFirstName(firstName);
     }
@@ -52,6 +58,11 @@ public class UserProfilPresenterImpl implements UserProfilPresenter, UserProfilM
     @Override
     public void onSuccessUrlProfilPicture(String url) {
     userProfilView.showUrlProfilPicture(url);
+    }
+
+    @Override
+    public void onErrorUrlProfilPicture() {
+    userProfilView.showErrorUploadingProfilPicture();
     }
 
 }

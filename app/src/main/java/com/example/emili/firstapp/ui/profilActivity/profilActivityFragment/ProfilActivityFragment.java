@@ -16,9 +16,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.emili.firstapp.R;
@@ -33,8 +35,10 @@ import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
 
 import javax.inject.Inject;
 
+import static android.app.Activity.RESULT_OK;
 
-public class ProfilActivityFragment extends Fragment implements UserProfilView, SharedPreferences.OnSharedPreferenceChangeListener{
+
+public class ProfilActivityFragment extends Fragment implements UserProfilView, View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,8 +69,14 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView, 
    // @BindView(R.id.email)
     TextView textViewEmail;
 
+    TextView fileIndicator;
+    Uri selectImageUri;
+
     //@BindView(R.id.profilImageView)
     ImageView profilImage;
+    Button save;
+
+    private static final int RC_PHOTO_PICKER = 2;
 
     private ProfilActivityComponent profilActivityComponent;
 
@@ -114,16 +124,19 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView, 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         textViewFirstName = (TextView) view.findViewById(R.id.firstName);
         textViewLastName = (TextView) view.findViewById(R.id.lastName);
         textViewEmail = (TextView) view.findViewById(R.id.email);
         profilImage = (ImageView) view.findViewById(R.id.profilImageView);
+        save = (Button) view.findViewById(R.id.save_button);
+        fileIndicator = (TextView) view.findViewById(R.id.fileIndicator);
 
+        fileIndicator.setVisibility(View.INVISIBLE);
         //ButterKnife.bind(getActivity(), view);
         userProfilPresenter.setUserProfilView(this);
         userProfilPresenter.loadUserData();
-        makeDefaultPicture(profilImage, urlPictureImage);
+        profilImage.setOnClickListener(this);
+        save.setOnClickListener(this);
     }
 
     @Override
@@ -143,7 +156,6 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView, 
         mListener = null;
     }
 
-
     @Override
     public void showFirstName(String firstName) {
     textViewFirstName.setText(firstName);
@@ -161,21 +173,48 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView, 
 
     @Override
     public void showUrlProfilPicture(String url) {
-        urlPictureImage = url;
+
+        Glide.with(getActivity())
+                .load(url)
+                .override(100, 100)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(profilImage);
     }
 
-    void makeDefaultPicture(ImageView imageView, String url){
-        Glide.with(this)
+    @Override
+    public void showErrorUploadingProfilPicture() {
+        Toast.makeText(getActivity(), "La photo n'a pas été uploadé", Toast.LENGTH_SHORT).show();
+    }
+
+    void makeDefaultPicture(Context context, ImageView imageView, String url){
+
+        Glide.with(context)
                 .load(url)
                 .override(100, 100)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(imageView);
     }
 
-
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+    public void onClick(View view) {
+        int id = view.getId();
 
+        switch (id){
+
+            case R.id.save_button:
+                if(selectImageUri != null){
+                    userProfilPresenter.updateProfilPicture(selectImageUri);
+                    selectImageUri = null;
+                }
+                else {
+                    Toast.makeText(getActivity(), "Uri null", Toast.LENGTH_SHORT).show();
+                }
+            break;
+
+            case R.id.profilImageView:
+            startInterneGalleryPicture();
+            break;
+        }
     }
 
     public interface OnFragmentInteractionListener {
@@ -183,4 +222,22 @@ public class ProfilActivityFragment extends Fragment implements UserProfilView, 
         void onFragmentInteraction(Uri uri);
     }
 
+    private void startInterneGalleryPicture() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/png");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
+            // Sign in was canceled by the user, finish the activity
+            this.selectImageUri = data.getData();
+            fileIndicator.setVisibility(View.VISIBLE);
+            fileIndicator.setText(selectImageUri.toString().substring(0, 30));
+        }
+    }
 }

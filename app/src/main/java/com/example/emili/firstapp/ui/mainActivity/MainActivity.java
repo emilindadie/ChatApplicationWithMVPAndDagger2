@@ -1,10 +1,12 @@
 package com.example.emili.firstapp.ui.mainActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +15,7 @@ import com.example.emili.firstapp.R;
 import com.example.emili.firstapp.app.ChatApplication;
 import com.example.emili.firstapp.dagger.MainActivityModule;
 import com.example.emili.firstapp.dagger.DaggerMainActivityComponent;
-import com.example.emili.firstapp.data.FirebaseHelper;
 import com.example.emili.firstapp.dagger.MainActivityComponent;
-import com.example.emili.firstapp.notification.NotificationUtils;
 import com.example.emili.firstapp.ui.signInActivity.SignInActivity;
 
 import javax.inject.Inject;
@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity implements SignUpView, View.
     private MainActivityComponent mainActivityComponent;
 
     @Inject
-    FirebaseHelper firebaseHelper;
-
-    @Inject
     SignUpPresenter signUpPresenter;
 
     public  MainActivityComponent getMainActivityComponent(){
@@ -60,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements SignUpView, View.
         return mainActivityComponent;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +134,8 @@ public class MainActivity extends AppCompatActivity implements SignUpView, View.
     public void onClick(View view) {
         int id = view.getId();
         switch (id){
-            case R.id.signInButton:
+            case R.id.signUpButton:
+                signUpButton.setBackgroundColor(getResources().getColor(R.color.signUpButtonClickedColor));
                 signUser();
                 break;
         }

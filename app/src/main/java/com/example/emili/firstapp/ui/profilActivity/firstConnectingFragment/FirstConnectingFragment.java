@@ -49,6 +49,7 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
 
     //@BindView(R.id.defaultImageView)
     ImageView defaultimageProfil;
+    Uri updateProfilImage;
 
 
     //@BindView(R.id.buttonBegin)
@@ -113,8 +114,6 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
         fileIndicator = (TextView) view.findViewById(R.id.fileIndicator);
         defaultimageProfil = (ImageView) view.findViewById(R.id.defaultImageView);
         begin = (Button) view.findViewById(R.id.buttonBegin);
-        fileIndicator.setText("");
-
         begin.setOnClickListener(this);
 
         //ButterKnife.bind(getActivity(), view);
@@ -166,7 +165,13 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         goToProfilActivity();
+    }
+
+    @Override
+    public void showErrorUpdateProfilPicture() {
+        Toast.makeText(getActivity(), "La photo n'a pas été envoiyé", Toast.LENGTH_LONG).show();
     }
 
     private void goToProfilActivity() {
@@ -183,10 +188,14 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
                 break;
 
             case R.id.buttonBegin:
-                if(fileIndicator.getText().length() > 0){
-                    cliquer = true;
-                }else {
-                goToProfilActivity();
+
+                if(updateProfilImage != null){
+                    fileIndicator.setVisibility(View.VISIBLE);
+                    fileIndicator.setText(updateProfilImage.toString().substring(0, 20));
+                    firstConnectingSettingPresenter.updateProfilPicture(updateProfilImage);
+                }
+                else {
+                    goToProfilActivity();
                 }
                 break;
         }
@@ -218,13 +227,7 @@ public class FirstConnectingFragment extends Fragment implements FirstConnecting
 
         if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
             // Sign in was canceled by the user, finish the activity
-            Uri selectImageUri = data.getData();
-
-            fileIndicator.setVisibility(View.VISIBLE);
-            fileIndicator.setText(selectImageUri.toString().substring(0, 10));
-            if(cliquer){
-                firstConnectingSettingPresenter.updateProfilPicture(selectImageUri);
-            }
+                this.updateProfilImage = data.getData();
         }
     }
 }

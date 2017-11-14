@@ -12,9 +12,11 @@ import java.util.List;
  */
 
 public interface ChatPresenter {
-    void sendMessage(ChatMessage chatMessage);
-    void sendMessagePhoto(Context context, Uri uri);
+    void sendMessage(Context context,ChatMessage chatMessage, Uri uri);
     void setView(ChatView chatView);
     void detachDataBaseReadListener();
     void attachDataBaseReadListerner();
+    void loadUserData();
+    void activedNotification();
+    void markedAllNotification();
 }

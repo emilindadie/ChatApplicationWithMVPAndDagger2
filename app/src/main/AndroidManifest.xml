@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.ChatApplication"
@@ -31,9 +32,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.mainActivity.MainActivity" />
         </activity>
-        <activity android:name=".ui.profilActivity.ProfilActivity" />
+        <activity android:name=".ui.profilActivity.ProfilActivity"
+            android:configChanges="orientation|screenSize"
+            />
         <activity android:name=".ui.preferencesActivity.PreferencesActivity" />
         <activity android:name=".ui.chatActivity.ChatActivity"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="stateAlwaysVisible"
             android:parentActivityName=".ui.profilActivity.ProfilActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

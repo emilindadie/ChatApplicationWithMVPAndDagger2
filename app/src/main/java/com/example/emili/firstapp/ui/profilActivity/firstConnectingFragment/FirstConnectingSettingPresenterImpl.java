@@ -67,6 +67,6 @@ public class FirstConnectingSettingPresenterImpl implements FirstConnectingSetti
 
     @Override
     public void onErrorUpdateProfilPicture() {
-
+    firstConnectingSettingView.showErrorUpdateProfilPicture();
     }
 }

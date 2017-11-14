@@ -9,4 +9,6 @@ public interface UserProfilModelCallBack {
     void onSuccessLastName(String lastName);
     void onSuccessEmail(String email);
     void onSuccessUrlProfilPicture(String url);
+    void onErrorUrlProfilPicture();
+
 }

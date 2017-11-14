@@ -21,7 +21,6 @@ public class FirebaseHelper {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
     private FirebaseStorage firebaseStorage;
     private StorageReference profilPictures;
     private StorageReference messagePictures;
@@ -30,7 +29,6 @@ public class FirebaseHelper {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
         firebaseStorage = FirebaseStorage.getInstance();
         profilPictures = firebaseStorage.getReference().child("profil_pictures");
         messagePictures = firebaseStorage.getReference().child("message_pictures");
@@ -39,15 +37,17 @@ public class FirebaseHelper {
     public FirebaseAuth getFirebaseAuth(){
         return firebaseAuth;
     }
-    public DatabaseReference getDatabaseReference(){
-        return databaseReference;
-    }
-    public FirebaseUser getFirebaseUser(){
-        return firebaseUser;
-    }
 
     public DatabaseReference getUserDataReference(FirebaseUser firebaseUser){
-        return  databaseReference.child("users").child(firebaseUser.getUid());
+        if(firebaseUser != null){
+            return  databaseReference.child("users").child(firebaseUser.getUid());
+        }
+        return null;
+    }
+
+
+    public DatabaseReference getUrlMessageDataReference(){
+            return  databaseReference.child("url_messages");
     }
 
     //get profil picture references

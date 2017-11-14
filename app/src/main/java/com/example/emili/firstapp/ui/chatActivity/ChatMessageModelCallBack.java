@@ -1,6 +1,8 @@
 package com.example.emili.firstapp.ui.chatActivity;
 
 import com.example.emili.firstapp.model.ChatMessage;
+import com.example.emili.firstapp.model.User;
+import com.example.emili.firstapp.notification.MessageUtils;
 
 import java.util.List;
 
@@ -10,9 +12,14 @@ import java.util.List;
 
 public interface ChatMessageModelCallBack{
         void getMessage(List<ChatMessage> chatMessageList);
+        void getMessage(ChatMessage chatMessage);
         void onSuccessSending();
         void onErrorSending();
         void onSuccessLoading();
         void onErrorLoading();
-        void showSuccessUplaodingMassagePictures();
+        void onErrorLoadingUserData();
+        void showSuccessUploadingMessagePictures();
+        void showErrorUploadingMessagePictures();
+        void getUserData(User user);
+        void onLoadingEmptyData();
 }

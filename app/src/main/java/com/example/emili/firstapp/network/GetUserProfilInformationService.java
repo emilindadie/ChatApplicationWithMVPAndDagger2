@@ -1,5 +1,7 @@
 package com.example.emili.firstapp.network;
 
+import android.net.Uri;
+
 import com.example.emili.firstapp.ui.profilActivity.profilActivityFragment.UserProfilModelCallBack;
 
 /**
@@ -8,4 +10,5 @@ import com.example.emili.firstapp.ui.profilActivity.profilActivityFragment.UserP
 
 public interface GetUserProfilInformationService {
     void loadUserData();
+    void updateProfilPicture(Uri uri);
 }

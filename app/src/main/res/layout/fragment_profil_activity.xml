@@ -44,6 +44,23 @@
             android:text="@string/email"
             android:textSize="25sp"
             android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/fileIndicator"
+            android:layout_below="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fileIndicator"
+            android:textSize="25sp"
+            android:layout_marginLeft="20dp"/>
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fileIndicator"
+            android:layout_marginLeft="140dp"
+            android:text="Enregistrer"/>
     </RelativeLayout>
 
 </FrameLayout>

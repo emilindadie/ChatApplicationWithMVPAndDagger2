@@ -69,6 +69,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView{
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                signInButton.setBackgroundColor(getResources().getColor(R.color.signInButtonClickedColor));
                 signInUser();
             }
         });

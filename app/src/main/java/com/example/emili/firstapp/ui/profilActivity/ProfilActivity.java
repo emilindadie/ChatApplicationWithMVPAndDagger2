@@ -32,10 +32,10 @@ public class ProfilActivity extends AppCompatActivity implements FirstConnecting
 
         Intent intent = getIntent();
         boolean extraResult = intent.getBooleanExtra("firstConnecting", true);
+        boolean action_profil = intent.getBooleanExtra("acion_profil", true);
 
-        if(extraResult){
+        if(extraResult && !action_profil) {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutProfilActivity, new FirstConnectingFragment()).commit();
-
         }else {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutProfilActivity, new ProfilActivityFragment()).commit();
         }

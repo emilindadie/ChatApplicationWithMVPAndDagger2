@@ -13,8 +13,10 @@ import java.util.List;
 
 public interface ModelMessageService {
 
-    void sendMessage(ChatMessage chatMessage);
-    void sendMessagePhoto(Context context, Uri uri);
+    void loadUserData();
+    void sendMessagePhoto(Context context, ChatMessage chatMessage, Uri uri);
     void detachDataBaseReadListener();
     void attachDataBaseReadListerner();
+    void activedNotification();
+    void markedAllNotification();
 }

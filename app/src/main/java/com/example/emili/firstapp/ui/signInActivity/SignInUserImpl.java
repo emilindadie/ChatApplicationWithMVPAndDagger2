@@ -48,7 +48,7 @@ public class SignInUserImpl implements SignInUserService {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    FirebaseUser user = task.getResult().getUser();
                     userData = firebaseHelper.getUserDataReference(user);
                     userData.addValueEventListener(new ValueEventListener() {
                         @Override
